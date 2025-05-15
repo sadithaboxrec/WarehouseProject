@@ -46,22 +46,22 @@ public class LoginServlet extends HttpServlet {
 					           
 					            session.setAttribute("userobj", us);
 			
-					            String role = us.getRoleName();
+					      //      String role = us.getRoleName();
                                                   String role = us.getRole();
 					            System.out.println("User logged in with role: " + role);
                                                     response.sendRedirect(request.getContextPath()+"/Dashboard/");
-					            switch (role) {
-					                case "Manager":
-					                    response.sendRedirect("Manager/home.jsp");
-					                    break;
-					                case "Warehouse_Manager": //receiving
-					                    response.sendRedirect("Receiving/home.jsp");
-					                    break;
-					                case "Supplier_Manager": //sending
-					                    response.sendRedirect("Sending/home.jsp");
-					                    break;
-
-					           }
+//					            switch (role) {
+//					                case "Manager":
+//					                    response.sendRedirect("Manager/home.jsp");
+//					                    break;
+//					                case "Warehouse_Manager": //receiving
+//					                    response.sendRedirect("Receiving/home.jsp");
+//					                    break;
+//					                case "Supplier_Manager": //sending
+//					                    response.sendRedirect("Sending/home.jsp");
+//					                    break;
+//
+//					           }
 
 
 							 } else {

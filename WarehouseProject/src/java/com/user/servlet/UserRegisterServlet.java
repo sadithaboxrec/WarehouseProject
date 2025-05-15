@@ -11,9 +11,7 @@ import jakarta.servlet.http.Part;
 
 import java.io.File;
 import java.io.IOException;
-//import java.sql.Connection;
-//import java.sql.PreparedStatement;
-//import java.sql.ResultSet;
+
 
 import com.DAO.userDAOImpl;
 import com.DB.DBConnect;
@@ -44,14 +42,14 @@ public class UserRegisterServlet extends HttpServlet {
 			Part part=request.getPart("userPhoto");
 			String fileName=part.getSubmittedFileName();
 			
-			int userroleId = 0;
-			Connection conn = DBConnect.getConn();
-			PreparedStatement psRole = conn.prepareStatement("SELECT userrole_id FROM user_role WHERE role_name = ?");
-			psRole.setString(1, role);
-			ResultSet rs = psRole.executeQuery();
-			if (rs.next()) {
-			    userroleId = rs.getInt("userrole_id");
-			}
+//			int userroleId = 0;
+//			Connection conn = DBConnect.getConn();
+//			PreparedStatement psRole = conn.prepareStatement("SELECT userrole_id FROM user_role WHERE role_name = ?");
+//			psRole.setString(1, role);
+//			ResultSet rs = psRole.executeQuery();
+//			if (rs.next()) {
+//			    userroleId = rs.getInt("userrole_id");
+//			}
 			
 			User us = new User(name, email, telephone, status, username, password, fileName,role);
 			userDAOImpl dao=new userDAOImpl(DBConnect.getConn());
