@@ -1,87 +1,47 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
-package com.user.servlet;
+package com.supplier.servlet;
 
+import com.DAO.SupplierDAOImpl;
+import com.DB.DBConnect;
+import com.Entity.Supplier;
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
-/**
- *
- * @author DELL
- */
-@WebServlet(name = "SupplierAdd", urlPatterns = {"/SupplierAdd"})
+
+@WebServlet("/add_supplier")
 public class SupplierAdd extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SupplierAdd</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SupplierAdd at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            String supp_name = request.getParameter("supp_name");
+            String supp_email = request.getParameter("supp_email");
+            String supp_cno = request.getParameter("supp_cno");
+            
+            Supplier s= new Supplier(supp_name,supp_email,supp_cno);
+            System.out.println(s);
+            
+            SupplierDAOImpl dao = new SupplierDAOImpl(DBConnect.getConn());
+            boolean f = dao.addSupplier(s);
+                        
+            if (f) {
+                request.setAttribute("SuccessMsg", "Supplier Added Successfully");
+                request.getRequestDispatcher("Suppliers/viewsupplier.jsp").forward(request, response);
+            } else {
+                request.setAttribute("failedMsg", "Something went wrong on server");
+                request.getRequestDispatcher("Suppliers/viewsupplier.jsp").forward(request, response);
+            }
+    
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }
+
