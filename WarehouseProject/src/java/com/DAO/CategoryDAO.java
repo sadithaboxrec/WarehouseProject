@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author methm
  */
-public interface CategryDAO {
+public interface CategoryDAO {
     public boolean addCategory(Category c);
     
     public  List <Category> getCategory();
