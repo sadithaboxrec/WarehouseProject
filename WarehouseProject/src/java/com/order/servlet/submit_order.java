@@ -1,6 +1,8 @@
 package com.order.servlet;
 
 import com.DAO.CategoryDAOImpl;
+import com.DAO.OrderDAOImpl;
+import com.DAO.OrderItemDAOImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -39,6 +41,46 @@ public class submit_order extends HttpServlet {
 		int supplierId = Integer.parseInt(request.getParameter("supplierId"));
 
 	    ProductDAOImpl productDAO = new ProductDAOImpl(DBConnect.getConn());
+OrderDAOImpl orderDAO = new OrderDAOImpl(DBConnect.getConn());  
+	    OrderItemDAOImpl itemDAO = new OrderItemDAOImpl(DBConnect.getConn());  
+
+	    
+	    List<Products> productList = productDAO.getProductsBySupplier(supplierId);
+
+	    
+	    int orderId = orderDAO.createOrder(supplierId);  
+            	    int dispitems = 0;
+	   
+	    for (Products p : productList) {
+	        String paramName = "qty_" + p.getPro_id();
+	        String qtyStr = request.getParameter(paramName);
+
+	        if (qtyStr != null && !qtyStr.isEmpty()) {
+	            int qty = Integer.parseInt(qtyStr);
+	            if (qty > 0) {
+	                
+                        if(itemDAO.addOrderItem(orderId, p.getPro_id(), qty)){
+                            dispitems++;
+                        }
+	                
+	            }
+	        }
+	    }
+            if (dispitems>0) {
+                request.setAttribute("SuccessMsg", "Orders successfully Sent");
+
+                List<Order> orderList = orderDAO.getAllOrders();  
+                request.setAttribute("orderList", orderList);
+                request.getRequestDispatcher("Order/vieworders.jsp").forward(request, response);
+                
+	    } else {
+                SupplierDAOImpl supplierDAO = new SupplierDAOImpl(DBConnect.getConn());
+                List<Supplier> supplierList = supplierDAO.getSupplier();
+                request.setAttribute("supplierList", supplierList);
+                request.setAttribute("failedMsg", "No Orders were sent");
+                request.getRequestDispatcher("Order/addorder.jsp").forward(request, response);
+	    }
+            
 
             
 
