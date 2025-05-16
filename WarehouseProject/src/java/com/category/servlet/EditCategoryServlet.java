@@ -54,6 +54,6 @@ public class EditCategoryServlet extends HttpServlet {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
+        }
+    }
 }
