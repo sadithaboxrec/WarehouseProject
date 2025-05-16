@@ -11,11 +11,12 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.Entity.OrderItem;
 /**
  *
  * @author sadit
  */
-public class OrderItemDAOImpl {
+public class OrderItemDAOImpl implements OrderItemDAO {
     
     	
 	private Connection conn;
