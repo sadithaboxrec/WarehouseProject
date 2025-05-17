@@ -1,6 +1,7 @@
 <%-- 
     Document   : vieworders
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     Created on : May 17, 2025, 1:06:36 PM
     Author     : USER
 --%>
@@ -16,6 +17,8 @@
         <h1>Hello World!</h1>
     </body>
 =======
+=======
+>>>>>>> Stashed changes
     Created on : May 17, 2025, 1:10:07 PM
     Author     : USER
 --%>
@@ -72,5 +75,8 @@
 
 
 </body>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 </html>
