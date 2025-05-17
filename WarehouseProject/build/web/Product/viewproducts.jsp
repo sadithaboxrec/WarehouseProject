@@ -9,10 +9,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-
+<!-- User Roll Validation -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="com.Entity.User"%>
-
+<%
+            String rights = null;
+            User seession_user = (User) session.getAttribute("userobj");
+            if(seession_user!=null){
+                rights = seession_user.uvalidate("Manager"); //Modify Here
+            }
+%>
+<c:set var="rights" value="<%= rights%>" />
+<c:if test="${empty rights }">
+    <script>
+getHTMLResponse("/unauthorized.jsp", "GET", null,null).then(function(htmlResponse) {$("#display").html(htmlResponse);}).catch(function(error) {console.error("Error:", error);$("#display").html("Error: " + error);});
+    </script>
+</c:if>
+<!-- End of User Roll Validation --> 
 
 <%@page isELIgnored="false" %>
 <%@page import="com.DAO.ProductDAOImpl"%>
@@ -68,6 +81,19 @@
 		      <td>
                           <button type="button" class="btn btn-warning" id="butedt<%= p.getPro_id() %>">Edit</button>
 
+                       <script>
+                            $("#butedt<%= p.getPro_id() %>").on("click", function(){
+                            console.log("clicked");
+                            getHTMLResponse("/edit_products", "GET", {id: '<%= p.getPro_id() %>'},null)
+                                .then(function(htmlResponse) {
+                                    $("#display").html(htmlResponse); // Update the element here
+                                })
+                                .catch(function(error) {
+                                    console.error("Error:", error);
+                                    $("#display").html("Error: " + error.responseText);
+                                });
+                            });
+                        </script>
 
 		      </td>
 		    </tr>
