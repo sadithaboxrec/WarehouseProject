@@ -12,6 +12,7 @@
 <%@page import="com.Entity.User"%>
 
 
+
 <%@ page import="com.DAO.CategoryDAOImpl" %>
 <%@ page import="com.DAO.StklocationDAO" %>
 
@@ -94,7 +95,6 @@
             </form>
         </div>
     </div>
-                        
 
 
     </body>
