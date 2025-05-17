@@ -1,13 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package com.DAO;
 
-/**
- *
- * @author dines
- */
+import java.util.List;
+
+import com.Entity.Dispatch;
+
 public interface DispatchDAO {
-    
+	
+	public boolean sendProduct(int productId, int qty, String destination);
+
+	public List<Dispatch> getAllDispatches();
+	
+	public boolean markDispatchAsCompleted(int dispatchId);
+	
+	public boolean createDispatch(int productId, int quantity, String destination);
 }

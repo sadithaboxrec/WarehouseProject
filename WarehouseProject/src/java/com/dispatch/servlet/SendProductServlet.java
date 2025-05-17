@@ -1,87 +1,115 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package com.dispatch.servlet;
 
+import com.DAO.CategoryDAOImpl;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.logging.Logger;
 
-/**
- *
- * @author dines
- */
-@WebServlet(name = "SendProductServlet", urlPatterns = {"/SendProductServlet"})
+import com.DAO.DispatchDAOImpl;
+import com.DAO.ProductDAOImpl;
+import com.DB.DBConnect;
+import com.Entity.Products;
+
+
+@WebServlet("/dispatchproducts")
 public class SendProductServlet extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SendProductServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SendProductServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+    Logger logger = Logger.getLogger("dispatchproducts");
+	private static final long serialVersionUID = 1L;
+       
+ 
+    public SendProductServlet() {
+        super();
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+	}
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
+//	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		
+//		String destination = request.getParameter("destination");
+//        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+//
+//        ProductDAOImpl productDAO = new ProductDAOImpl(DBConnect.getConn());
+//        DispatchDAOImpl dispatchDAO = new DispatchDAOImpl(DBConnect.getConn());
+//
+//        List<Products> productList = productDAO.getProductsByCategory(categoryId);
+//
+//        boolean atLeastOneSent = false;
+//
+//        for (Products p : productList) {
+//            String paramName = "qty_" + p.getPro_id();
+//            String qtyStr = request.getParameter(paramName);
+//
+//            if (qtyStr != null && !qtyStr.isEmpty()) {
+//                int qty = Integer.parseInt(qtyStr);
+//
+//                if (qty > 0 && p.getPro_stock() >= qty) {
+//                    boolean sent = dispatchDAO.sendProduct(p.getPro_id(), qty, destination);
+//                    if (sent) {
+//                        atLeastOneSent = true;
+//                    }
+//                }
+//            }
+//        }
+//
+//        if (atLeastOneSent) {
+//            response.sendRedirect("Dispatch/dispatchsuccess.jsp");
+//        } else {
+//            response.sendRedirect("Dispatch/dispatcherror.jsp");
+//        }
+//        
+//	}
+	
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	    String destination = request.getParameter("destination");
+	    int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+
+	    ProductDAOImpl productDAO = new ProductDAOImpl(DBConnect.getConn());
+	    DispatchDAOImpl dispatchDAO = new DispatchDAOImpl(DBConnect.getConn());
+
+	    List<Products> productList = productDAO.getProductsByCategory(categoryId);
+
+	    int dispitems = 0;
+
+	    for (Products p : productList) {
+	        String paramName = "qty_" + p.getPro_id();
+	        String qtyStr = request.getParameter(paramName);
+
+	        if (qtyStr != null && !qtyStr.isEmpty()) {
+	            int qty = Integer.parseInt(qtyStr);
+
+	            if (qty > 0) {
+	                
+	                boolean created = dispatchDAO.createDispatch(p.getPro_id(), qty, destination);
+	                if (created) {
+                            dispitems++;
+                            logger.severe(""+dispitems);
+	                }
+	            }
+	        }
+	    }
+
+	    if (dispitems>0) {
+                logger.severe("SuccessMsg");
+                request.setAttribute("SuccessMsg", "Products successfully dispatched to store!");
+                
+	    } else {
+                logger.severe("failedMsg");
+                request.setAttribute("failedMsg", "No products were sent. Please check quantities or stock availability.");
+	    }
+            CategoryDAOImpl categoryDAO = new CategoryDAOImpl(DBConnect.getConn());
+            request.setAttribute("categoryList", categoryDAO.getCategory());
+            request.getRequestDispatcher("Dispatch/selectcategory.jsp").forward(request, response);
+	}
 }
+
+
