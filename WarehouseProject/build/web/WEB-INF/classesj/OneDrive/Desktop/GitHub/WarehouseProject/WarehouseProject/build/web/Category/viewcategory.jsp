@@ -8,9 +8,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<!-- User Roll Validation -->
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="com.Entity.User"%>
+
+<!-- User Roll Validation -->
+
 <%
             String rights = null;
             User seession_user = (User) session.getAttribute("userobj");
@@ -24,8 +27,7 @@
 getHTMLResponse("/unauthorized.jsp", "GET", null,null).then(function(htmlResponse) {$("#display").html(htmlResponse);}).catch(function(error) {console.error("Error:", error);$("#display").html("Error: " + error);});
     </script>
 </c:if>
-<!-- End of User Roll Validation --> 
-
+<!-- End of User Roll Validation -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@page isELIgnored="false" %>
@@ -86,7 +88,7 @@ getHTMLResponse("/unauthorized.jsp", "GET", null,null).then(function(htmlRespons
 		      <td>
                          <button type="button" class="btn btn-warning" id="butedt<%=c.getCategoryId()%>">Edit</button>
                           
-                        <script>
+                   <script>
                             $("#butedt<%=c.getCategoryId()%>").on("click", function(){
                                 console.log("clicked");
                                 getHTMLResponse("/Category/editcategory.jsp", "GET", {id: '<%=c.getCategoryId()%>'},null)
@@ -98,8 +100,8 @@ getHTMLResponse("/unauthorized.jsp", "GET", null,null).then(function(htmlRespons
                                     $("#display").html("Error: " + error.responseText);
                                 });
                             });
-                        </script>
-            
+                        </script>
+                         
 		      </td>
 		    </tr>
 			  

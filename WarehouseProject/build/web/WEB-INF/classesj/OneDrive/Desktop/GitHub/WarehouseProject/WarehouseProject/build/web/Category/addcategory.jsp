@@ -6,10 +6,12 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<!-- User Roll Validation -->
+    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="com.Entity.User"%>
+
+<!-- User Roll Validation -->
+
 <%
             String rights = null;
             User seession_user = (User) session.getAttribute("userobj");
@@ -23,7 +25,7 @@
 getHTMLResponse("/unauthorized.jsp", "GET", null,null).then(function(htmlResponse) {$("#display").html(htmlResponse);}).catch(function(error) {console.error("Error:", error);$("#display").html("Error: " + error);});
     </script>
 </c:if>
-<!-- End of User Roll Validation --> 
+<!-- End of User Roll Validation -->
 
 <%@page isELIgnored="false" %>
 
