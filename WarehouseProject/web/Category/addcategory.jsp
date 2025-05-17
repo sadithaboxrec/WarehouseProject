@@ -10,6 +10,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="com.Entity.User"%>
 
+
 <%@page isELIgnored="false" %>
 
 <%@ page import="com.DAO.CategoryDAOImpl" %>
@@ -71,6 +72,7 @@
             </form>
         </div>
     </div>
+
 
         
 
