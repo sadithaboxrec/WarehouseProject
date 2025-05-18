@@ -45,8 +45,14 @@ getHTMLResponse("/unauthorized.jsp", "GET", null,null).then(function(htmlRespons
     
     <div class="card">
         <h5 class="card-header text-center">All Products</h5>
+        
+    <!--  Search Input Field -->
+                <div class="p-3">
+                    <input type="text" id="productSearch" class="form-control" placeholder="Search by Product Name...">
+                </div>
+
         <div class="card-body">
-            <table class="table table-hover">
+            <table class="table table-hover" id="productTable">
             <thead>
                 <tr>
                   <th scope="col">Id</th>
@@ -105,6 +111,16 @@ getHTMLResponse("/unauthorized.jsp", "GET", null,null).then(function(htmlRespons
 
 		  </tbody>
 		</table>
+                  
+                  <!-- Search products  -->
+<script>
+    $("#productSearch").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#productTable tbody tr").filter(function() {
+            $(this).toggle($(this).find("td:eq(2)").text().toLowerCase().indexOf(value) > -1);
+        });
+    });
+</script>
 
 </body>
 </html>
