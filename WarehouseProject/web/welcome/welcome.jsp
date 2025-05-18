@@ -7,18 +7,22 @@
 
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alexander Store - Warehouse</title>
+    <title>ToyMart Store - Warehouse</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style href="welcome.css" rel="stylesheet"></style>
 </head>
+
+
 <body class="bg-gray-100">
+    
     <header class="bg-blue-600 text-white py-4 md:py-6">
         <div class="container mx-auto px-4 flex justify-between items-center">
-            <h1 class="text-xl md:text-2xl font-semibold">Alexander Store - Warehouse</h1>
+            <h1 class="text-xl md:text-2xl font-semibold">ToyMart Store - Warehouse</h1>
         </div>
     </header>
 
@@ -112,7 +116,7 @@
             <div class="md:w-1/2">
                 <h2 class="text-2xl md:text-3xl font-semibold mb-4 text-blue-700">About Us</h2>
                 <p class="text-gray-600 text-lg">
-                    Founded in 2021, Alexander Store is a passionate startup toy shop dedicated to delivering high-quality toys that spark joy, creativity, and nostalgia across all age groups — 
+                    Founded in 2021, ToyMart Store is a passionate startup toy shop dedicated to delivering high-quality toys that spark joy, creativity, and nostalgia across all age groups — 
                     from toddlers to the young at heart. Our mission is simple yet powerful: to bring smiles to faces of every generation through thoughtfully curated toys that inspire play, 
                     connection, and lifelong memories
                 </p>
@@ -122,9 +126,11 @@
 
     <footer class="bg-gray-800 text-white py-6">
         <div class="container mx-auto text-center">
-            <p>© 2025 Alexander Store - Warehouse. All rights reserved.</p>
+            <p>© 2025 ToyMart Store - Warehouse. All rights reserved.</p>
         </div>
     </footer>
+                    
     <script src="welcome.js"></script>
+    
 </body>
 </html>
