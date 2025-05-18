@@ -41,6 +41,11 @@ getHTMLResponse("/unauthorized.jsp", "GET", null,null).then(function(htmlRespons
     <div class="card">
         <h5 class="card-header text-center">Order List</h5>
         <div class="card-body">
+            
+             <div class="mb-3">
+                 <input type="text" id="orderSearch" class="form-control" placeholder="Search by Supplier Name...">
+             </div>
+            
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -50,7 +55,7 @@ getHTMLResponse("/unauthorized.jsp", "GET", null,null).then(function(htmlRespons
                       <th scope="col">Status</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="orderTableBody">
                     <c:forEach var="order" items="${orderList}">
                         <tr>
                             <td>${order.orderId}</td>
@@ -100,5 +105,17 @@ getHTMLResponse("/unauthorized.jsp", "GET", null,null).then(function(htmlRespons
         </div>
     </div>    
 </body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+<script>
+    $("#orderSearch").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+
+        $("#orderTableBody tr").filter(function () {
+            var supplierName = $(this).find("td:eq(1)").text().toLowerCase();
+            $(this).toggle(supplierName.indexOf(value) > -1);
+        });
+    });
+</script>
 
 </html>
