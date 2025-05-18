@@ -76,7 +76,10 @@ public class OrderDAOImpl implements OrderDAO {
 
 
 	    try {
-		    String sql = "SELECT * FROM orders ORDER BY order_date DESC";
+		  //  String sql = "SELECT * FROM orders ORDER BY order_date DESC";
+                  
+                String sql = "SELECT o.*, s.supp_name FROM orders o JOIN supplier s ON"
+                        + " o.supplier_id = s.supp_id ORDER BY o.order_date DESC";
 		    PreparedStatement ps = conn.prepareStatement(sql);
 	        ResultSet rs = ps.executeQuery();
 	        
@@ -85,6 +88,7 @@ public class OrderDAOImpl implements OrderDAO {
 	            Order o = new Order();
 	            o.setOrderId(rs.getInt("order_id"));
 	            o.setSupplierId(rs.getInt("supplier_id"));
+                    o.setSupplierName(rs.getString("supp_name"));
 	            o.setOrderDate(rs.getString("order_date"));
 	            o.setStatus(rs.getString("status"));
 	            list.add(o);
@@ -98,5 +102,19 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 
-    
+            public int getIncompleteOrders() {
+                int count = 0;
+                try {
+                    String sql = "SELECT COUNT(*) FROM orders WHERE status != 'received'";
+                    PreparedStatement ps = conn.prepareStatement(sql);
+                    ResultSet rs = ps.executeQuery();
+                    if (rs.next()) {
+                        count = rs.getInt(1);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return count;
+        }
+
 }

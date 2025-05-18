@@ -46,7 +46,7 @@ getHTMLResponse("/unauthorized.jsp", "GET", null,null).then(function(htmlRespons
                 <thead>
                     <tr>
                       <th scope="col">Order ID</th>
-                      <th scope="col">Supplier ID</th>
+                      <th scope="col">Supplier Name</th>
                       <th scope="col">Date</th>
                       <th scope="col">Status</th>
                     </tr>
@@ -55,7 +55,7 @@ getHTMLResponse("/unauthorized.jsp", "GET", null,null).then(function(htmlRespons
                     <c:forEach var="order" items="${orderList}">
                         <tr>
                             <td>${order.orderId}</td>
-                            <td>${order.supplierId}</td>
+                            <td>${order.supplierName}</td>
                             <td>${order.orderDate}</td>
 
 			    <c:if test="${order.status == 'received'}">

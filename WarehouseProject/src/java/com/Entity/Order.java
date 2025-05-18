@@ -14,6 +14,20 @@ public class Order {
     private int supplierId;
     private String orderDate;
     private String status;
+    
+        
+    // to update the order page
+    
+    private String supplierName;
+
+public String getSupplierName() {
+    return supplierName;
+}
+
+public void setSupplierName(String supplierName) {
+    this.supplierName = supplierName;
+}
+
 
     
     public int getOrderId() {
