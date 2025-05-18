@@ -47,8 +47,14 @@ getHTMLResponse("/unauthorized.jsp", "GET", null,null).then(function(htmlRespons
         
         <div class="card">
             <h5 class="card-header text-center">Suppliers</h5>
+            
+                            <!--Search Input -->
+            <div class="p-3">
+                <input type="text" id="supplierSearch" class="form-control" placeholder="Search by Supplier Name...">
+            </div>
+                            
             <div class="card-body">
-                <table class="table table-hover">
+                <table class="table table-hover" id="supplierTable">
                         <thead>
                             <tr>
                               <th scope="col">Id</th>
@@ -98,5 +104,16 @@ getHTMLResponse("/unauthorized.jsp", "GET", null,null).then(function(htmlRespons
 		  }
 		  %>
                 </table>
+                
+            <script>
+                $("#supplierSearch").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+
+                    $("#supplierTable tbody tr").filter(function () {
+                        var supplierName = $(this).find("td:eq(1)").text().toLowerCase(); // 2nd column = Name
+                        $(this).toggle(supplierName.indexOf(value) > -1);
+                    });
+                });
+            </script>
     </body>
 </html>
