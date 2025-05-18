@@ -1,0 +1,29 @@
+       #dragable_modal {
+            position: relative;
+        }
+
+        #dragable_modal .modal-dialog {
+            position: fixed;
+            max-width: 100%;
+            box-shadow: 0 0 5px rgba(0, 0, 0, .5);
+            background: var(--white);
+            margin: 0;
+        }
+
+        #dragable_modal .modal-content {
+            height: 400px;
+            overflow: hidden;
+            resize: both;
+            width: 500px;
+        }
+
+        #dragable_modal .modal-body {
+            height: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        #dragable_modal .modal-header h3 {
+            color: var(--white);
+            font-size: 18px;
+        }
