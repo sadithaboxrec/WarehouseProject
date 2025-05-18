@@ -1,0 +1,74 @@
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /*Crad*/
+        .value-card {
+            background-color: white; /* Tailwind's bg-white */
+            border-radius: 0.5rem; /* Tailwind's rounded-lg */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Tailwind's shadow-md */
+            padding: 1.5rem; /* Tailwind's p-6 */
+            width: 300px; /* Fixed width for the card */
+            text-align: center;
+        }
+
+        .value-title {
+            font-size: 1.25rem; /* Tailwind's text-lg */
+            font-weight: 500; /* Tailwind's font-semibold */
+            color: #4a5568; /* Tailwind's text-gray-700 */
+            margin-bottom: 1rem; /* Tailwind's mb-4 */
+        }
+
+        .value-metric {
+            font-size: 1rem; /* Tailwind's text-base */
+            color: #718096; /* Tailwind's text-gray-500 */
+            margin-bottom: 0.75rem; /* Tailwind's mb-3 */
+        }
+
+        .meter {
+            background-color: #edf2f7; /* Tailwind's bg-gray-200 */
+            height: 0.5rem; /* Tailwind's h-2 */
+            border-radius: 0.75rem; /* Tailwind's rounded-full */
+            position: relative;
+            margin-bottom: 1rem; /* Tailwind's mb-4 */
+        }
+
+        .meter-fill {
+            background-color: #68d391; /* Tailwind's bg-green-400 */
+            height: 100%;
+            border-radius: 0.75rem; /* Tailwind's rounded-full */
+            width: 70%; /* Adjust this to represent the value */
+            transition: width 0.5s ease-in-out; /* Smooth transition */
+            position: relative; /* For the gradient overlay */
+             background-image: linear-gradient(
+                to right,
+                #68d391,
+                #48bb78
+            );
+        }
+
+       .meter-fill::after{
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 0.75rem;
+            background: rgba(255, 255, 255, 0.2);
+            opacity: 0.3;
+        }
+
+        .value-number {
+            font-size: 1.5rem; /* Tailwind's text-2xl */
+            font-weight: 700; /* Tailwind's font-bold */
+            color: #2d3748; /* Tailwind's text-gray-800 */
+        }
+
+        .value-description {
+            font-size: 0.875rem; /* Tailwind's text-sm */
+            color: #a0aec0; /* Tailwind's text-gray-400 */
+            margin-top: 0.75rem; /* Tailwind's mt-3 */
+        }
+                /*Crad*/

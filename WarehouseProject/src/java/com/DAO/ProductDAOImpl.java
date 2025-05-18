@@ -255,7 +255,69 @@ public class ProductDAOImpl implements ProductDAO {
 	}
 	
 	
-	
+	       // for Dashboard
+        
+            public int getTotalProducts() {
+                int count = 0;
+                try {
+                    String sql = "SELECT COUNT(*) FROM products";
+                    PreparedStatement ps = conn.prepareStatement(sql);
+                    ResultSet rs = ps.executeQuery();
+                    if (rs.next()) {
+                        count = rs.getInt(1);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return count;
+            }
+
+        public int getProductsBelowQuantity(int threshold) {
+            int count = 0;
+            try {
+                String sql = "SELECT COUNT(*) FROM products WHERE pro_stock < ?";
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setInt(1, threshold);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    count = rs.getInt(1);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return count;
+        }
+
+        
+        
+        public List<Products> getProductsBelowStock(int threshold) {
+    List<Products> productList = new ArrayList<>();
+    Products p=null;
+    try {
+        String sql = "SELECT p.*, s.supp_name FROM products p JOIN supplier s ON"
+                + " p.pro_supplier = s.supp_id WHERE p.pro_stock < ?";
+
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, threshold);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            p = new Products();
+            
+            p.setPro_name(rs.getString("pro_name")); 
+            p.setPro_stock(rs.getInt("pro_stock"));
+            p.setSuppName(rs.getString("supp_name"));
+
+            productList.add(p);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return productList;
+}
+
+
 	
 	
 
